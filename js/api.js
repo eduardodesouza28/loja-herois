@@ -1,6 +1,6 @@
 // js/api.js
 
-const API_BASE_URL = 'http://localhost:3000/api'; // Substitua pelo seu endpoint real
+const API_BASE_URL = 'http://localhost:5432/herois'; // Substitua pelo seu endpoint real
 
 /**
  * Lida com a comunicação com a API do backend.
@@ -8,14 +8,15 @@ const API_BASE_URL = 'http://localhost:3000/api'; // Substitua pelo seu endpoint
 class ApiService {
     async fetchProdutos() {
         // Exemplo de como faria a requisição real
-        // const response = await fetch(`${API_BASE_URL}/produtos`);
-        // return await response.json();
+        const response = await fetch(`${API_BASE_URL}/produtos`);
+        console.log("Simulando fetch de produtos do backend");
+        return await response.json();
 
         // Dados simulados para demonstração
-        return [
-            { id: 1, nome: 'Homem de Ferro', codigo: '001', preco: 159.90, link: 'link-ironman', descricao: 'Action figure do Homem de Ferro.', imagemUrl: 'imagens/imagem1.jpg' },
-            { id: 2, nome: 'Capitão América', codigo: '002', preco: 129.90, link: 'link-capitao', descricao: 'Escudo e figura do Capitão América.', imagemUrl: 'imagens/imagem2.jpg' },
-        ];
+        // return [
+        //     { id: 1, nome: 'Homem de Ferro', codigo: '001', preco: 159.90, link: 'link-ironman', descricao: 'Action figure do Homem de Ferro.', imagemUrl: 'imagens/imagem1.jpg' },
+        //     { id: 2, nome: 'Capitão América', codigo: '002', preco: 129.90, link: 'link-capitao', descricao: 'Escudo e figura do Capitão América.', imagemUrl: 'imagens/imagem2.jpg' },
+        // ];
     }
 
     async addProduto(produto) {

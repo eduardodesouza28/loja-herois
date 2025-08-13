@@ -15,6 +15,10 @@ async function init() {
     if (document.querySelector('.produtos')) {
         try {
             const dados = await apiService.fetchProdutos();
+            console.log("Produtos carregados:", dados);
+            if (!Array.isArray(dados)) {
+                throw new Error("Dados recebidos não são um array.");
+            }
             const produtos = dados.map(item => new Produto(item.id, item.nome, item.codigo, item.preco, item.link, item.descricao, item.imagemUrl));
             renderizarProdutos(produtos);
         } catch (error) {
