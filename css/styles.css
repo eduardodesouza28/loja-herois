@@ -13,7 +13,7 @@
 /*Cabeçalho*/
 header{
     background-color: #070347;
-    position: fixed;
+    /* position: fixed; */
     color: #fff;
     padding: 5px;
     text-align: center;
