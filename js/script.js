@@ -2,7 +2,9 @@ let login = '', senha, qtdCont = 0, valor = 0, totalGeral = 0, cesta, loginAut
 let article, div, div2, h3, p1, input, p2, span, aLink, main, section, footer, h2, p3, span2, aLink2
 let usr = []
 let snh = []
-let produto = []
+import { produtos } from './produtos.js'
+// let produto = []
+
 if(localStorage.prodArr){
     produto = JSON.parse(localStorage.getItem('prodArr'))
 }
@@ -32,60 +34,24 @@ if(localStorage.totCompArr){
 }
 
 function getDados(){
-    if(localStorage.qtdArr){
-        qtd = JSON.parse(localStorage.getItem('qtdArr'))
-    }
-    //qtd.push(0)
-    localStorage.qtdArr = JSON.stringify(qtd)
-    if(localStorage.totCompArr){
-        totalCompra = JSON.parse(localStorage.getItem('totCompArr'))
-    }
-    //totalCompra.push(0)
-    localStorage.totCompArr = JSON.stringify(totalCompra)
-    if(localStorage.prodArr){
-        produto = JSON.parse(localStorage.getItem('prodArr'))
-    }
-    let prod = document.getElementById('produto').value
-    produto.push(prod)
-    localStorage.prodArr = JSON.stringify(produto)
-    document.getElementById('produto').value = ''
+    const prod = document.getElementById('produto').value;
+    const descri = document.getElementById('descricao').value;
+    const codig = document.getElementById('codigo').value;
+    const prec = parseFloat(document.getElementById('preco').value.replace(',', '.'));
+    const lnk = document.getElementById('linkAmazon').value;
+    // ... lógica para obter a imagem
+    
+    // Supondo que você tem um ID único
+    const novoProduto = new Produto(Date.now(), prod, codig, prec, lnk, descri);
 
-    if(localStorage.descArr){
-        descricao = JSON.parse(localStorage.getItem('descArr'))
-    }
-    let descri = document.getElementById('descricao').value
-    descricao.push(descri)
-    localStorage.descArr = JSON.stringify(descricao)
-    document.getElementById('descricao').value = ''
+    // Lógica para salvar no banco de dados aqui
+    // Ao invés de usar localStorage, você enviaria este objeto para o servidor
+    // Exemplo: saveProductToDatabase(novoProduto);
 
-    if(localStorage.codArr){
-        cod = JSON.parse(localStorage.getItem('codArr'))
-    }
-    let codig = document.getElementById('codigo').value
-    cod.push(codig)
-    localStorage.codArr = JSON.stringify(cod)
-    document.getElementById('codigo').value = ''
-
-    if(localStorage.precoArr){
-        preco = JSON.parse(localStorage.getItem('precoArr'))
-    }
-    let prec = document.getElementById('preco').value
-    preco.push(parseFloat(prec.replace(',' , '.')))
-    localStorage.precoArr = JSON.stringify(preco)
-    document.getElementById('preco').value = ''
-
-    if(localStorage.linkArr){
-        link = JSON.parse(localStorage.getItem('linkArr'))
-    }
-    let lnk = document.getElementById('linkAmazon').value
-    link.push(lnk)
-    localStorage.linkArr = JSON.stringify(link)
-    document.getElementById('linkAmazon').value = ''
-
-    alert("Dados inseridos com Sucesso!")
+    alert("Dados inseridos com Sucesso!");
 }
 
-function montaHTML(){ //********************************************************** */
+function montaHTML(){
     main = document.createElement('main')
     main.setAttribute('class', 'container')
     document.body.append(main)
@@ -320,4 +286,3 @@ function getDadosClientes(){
     }
 alert(`${dadosCliente.email}, ${dadosCliente.senha}, ${nome}`)
 }
-/***************************************************************************** */
