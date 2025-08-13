@@ -1,6 +1,6 @@
 // js/api.js
 
-const API_BASE_URL = 'http://localhost:5432/herois'; // Substitua pelo seu endpoint real
+const API_BASE_URL = 'http://localhost:3000/herois'; // Substitua pelo seu endpoint real
 
 /**
  * Lida com a comunicação com a API do backend.
