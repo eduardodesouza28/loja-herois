@@ -7,12 +7,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Conexão com PostgreSQL
 const pool = new Pool({
-  user: 'postgres',       // Seu usuário do pgAdmin
+  user: 'postgres',
   host: 'localhost',
-  database: 'herois',   // Nome do seu banco
-  password: 'senai',  // Sua senha do PostgreSQL
+  database: 'herois',
+  password: 'senai',
   port: 5432
 });
 
@@ -24,6 +23,17 @@ app.get('/produtos', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao buscar produtos' });
+  }
+});
+
+// GET - listar clientes/usuarios
+app.get('/usuarios', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM clientes');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao buscar clientes' });
   }
 });
 
@@ -39,6 +49,21 @@ app.post('/produtos', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao adicionar produto' });
+  }
+});
+
+// POST - adicionar cliente/usuario
+app.post('/usuarios', async (req, res) => {
+  const { nome, sobrenome, email, senha, cpf, pagamento, telefone, endereco } = req.body;
+  try {
+    await pool.query(
+      'INSERT INTO clientes (nome, sobrenome, email, senha_hash, cpf, forma_pagamento, telefone, endereco) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+      [nome, sobrenome, email, senha, cpf, pagamento, telefone, endereco]
+    );
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao adicionar cliente' });
   }
 });
 

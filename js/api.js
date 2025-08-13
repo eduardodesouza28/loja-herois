@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:3000'; // Substitua pelo seu endpoint real
+const API_BASE_URL = 'http://localhost:3000';
 
 class ApiService {
     async fetchProdutos() {
@@ -19,6 +19,20 @@ class ApiService {
     async deleteProduto(produtoId) {
         const response = await fetch(`${API_BASE_URL}/produtos/${produtoId}`, {
             method: 'DELETE'
+        });
+        return await response.json();
+    }
+
+    async fetchUsuarios() {
+        const response = await fetch(`${API_BASE_URL}/usuarios`);
+        return await response.json();
+    }
+
+    async addUsuario(usuario) {
+        const response = await fetch(`${API_BASE_URL}/usuarios`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(usuario)
         });
         return await response.json();
     }
