@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import pkg from 'pg';
+import bcrypt from 'bcrypt'; // Importando a biblioteca bcrypt para criptografar senhas
+
 const { Pool } = pkg;
 
 const app = express();
@@ -55,10 +57,15 @@ app.post('/produtos', async (req, res) => {
 // POST - adicionar cliente/usuario
 app.post('/usuarios', async (req, res) => {
   const { nome, sobrenome, email, senha, cpf, pagamento, telefone, endereco } = req.body;
+  
   try {
+    // Criptografa a senha antes de salvar no banco de dados
+    const saltRounds = 10;
+    const senhaHash = await bcrypt.hash(senha, saltRounds);
+    
     await pool.query(
       'INSERT INTO clientes (nome, sobrenome, email, senha_hash, cpf, forma_pagamento, telefone, endereco) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
-      [nome, sobrenome, email, senha, cpf, pagamento, telefone, endereco]
+      [nome, sobrenome, email, senhaHash, cpf, pagamento, telefone, endereco]
     );
     res.json({ success: true });
   } catch (err) {
@@ -75,6 +82,36 @@ app.delete('/produtos/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Erro ao excluir produto' });
+  }
+});
+
+// POST - Rota de login para autenticação de usuário
+app.post('/login', async (req, res) => {
+  const { email, senha } = req.body;
+  
+  try {
+    // Busca o usuário no banco de dados pelo email
+    const result = await pool.query('SELECT * FROM clientes WHERE email = $1', [email]);
+    const usuario = result.rows[0];
+
+    // Verifica se o usuário existe
+    if (!usuario) {
+      return res.status(401).json({ message: 'Credenciais inválidas' });
+    }
+
+    // Compara a senha fornecida com a senha criptografada do banco de dados
+    const senhaCorreta = await bcrypt.compare(senha, usuario.senha_hash);
+
+    if (senhaCorreta) {
+      // Se a senha estiver correta, o login é bem-sucedido
+      res.status(200).json({ message: 'Login bem-sucedido!' });
+    } else {
+      // Se a senha estiver incorreta
+      res.status(401).json({ message: 'Credenciais inválidas' });
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Erro ao fazer login' });
   }
 });
 

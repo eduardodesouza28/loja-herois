@@ -36,6 +36,21 @@ class ApiService {
         });
         return await response.json();
     }
+    
+    async loginUsuario(credenciais) {
+        const response = await fetch(`${API_BASE_URL}/login`, { // Nova rota '/login'
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(credenciais)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || 'Erro ao fazer login.');
+        }
+
+        return await response.json();
+    }   
 
 }
 
