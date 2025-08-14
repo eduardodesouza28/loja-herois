@@ -1,12 +1,12 @@
 
-import { apiService } from './api.js';
+import { apiServicePublic } from './api.js';
 
 async function carregarProdutos() {
     const container = document.querySelector('.produtos');
     container.innerHTML = '<p>Carregando...</p>';
 
     try {
-        const dados = await apiService.fetchProdutos();
+        const dados = await apiServicePublic.fetchProdutos();
         container.innerHTML = '';
 
         if (dados.length === 0) {

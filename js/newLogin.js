@@ -1,4 +1,4 @@
-import { apiService } from './api.js';
+import { apiServicePublic } from './api.js';
 
 document.getElementById('form-usuario').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -15,7 +15,7 @@ document.getElementById('form-usuario').addEventListener('submit', async (e) => 
     };
 
     try {
-        await apiService.addUsuario(usuario);
+        await apiServicePublic.addUsuario(usuario);
         alert('usuario adicionado com sucesso!');
         e.target.reset();
     } catch (error) {

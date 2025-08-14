@@ -1,6 +1,36 @@
 
 import { apiService } from './api.js';
 
+async function verificarLogin() {
+    const token = localStorage.getItem('token');
+
+    // Se não houver token, manda pro login
+    if (!token) {
+        window.location.href = '/login.html';
+        return;
+    }
+
+    try {
+        // Faz uma requisição rápida para validar o token
+        const response = await fetch('http://localhost:3000/perfil', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+
+        if (!response.ok) {
+            // Token inválido ou expirado
+            localStorage.removeItem('token');
+            window.location.href = '/login.html';
+        }
+    } catch (error) {
+        console.error('Erro ao verificar login:', error);
+        localStorage.removeItem('token');
+        window.location.href = '/login.html';
+    }
+}
+
+// Executa assim que o arquivo for carregado
+verificarLogin();
+
 async function carregarProdutos() {
     const container = document.querySelector('.produtos');
     container.innerHTML = '<p>Carregando...</p>';

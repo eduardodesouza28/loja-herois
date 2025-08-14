@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+
 </head>
+
 <body>
-    <header>
-        <h1>Login</h1>
-    </header>
-    <main>
-        <form id="form-login">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+    <h1>Login</h1>
+    <form id="form-login">
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="password" id="password" placeholder="Senha" required />
+        <button type="submit">Entrar</button> <br>
+        <a href="newLogn.html">criar login</a> <br>
+        <a href="index.html">pagina inicial</a>
+    </form>
+    <script type="module" src="./js/login.js"></script>
 
-            <label for="password">Senha:</label>
-            <input type="password" id="password" name="password" required>
-
-            <button type="submit">Entrar</button>
-        </form>
-    <footer>
-        <a href="index.html">Voltar para a Loja</a>
-    </footer>
 </body>
+
 </html>
