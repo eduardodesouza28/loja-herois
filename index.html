@@ -8,16 +8,19 @@
     <link rel="stylesheet" href="css/styles.css">
     <script type="module" src="js/main.js"></script>
 </head>
-<!--**************************************** -->
 
 <body>
-    <!--**************************************** -->
     <header>
         <div id="hcont">
-            <button onclick="criaLogin()" id="clog">crie seu login</button>
-            <button onclick="abreTelaLogin()" id="log">Login</button>
+            <a href="newLogn.html" id="log">crie seu login</a>
+            <a href="login.html" id="log">login</a>
             <h1>Loja dos Nerds <br> Vingadores x Liga da Justiça</h1>
-            <a onclick="calculaCesta()" class="car" href="#">Compras<img src="" alt="Carrinho de compras"></a>
+            <a href="carrinho.html" id="log">
+                <div id="carrinho-info">
+                    Carrinho: <span id="contador-carrinho">0</span> itens
+                </div>
+            </a>
+
         </div>
     </header>
     <div class="produtos"></div>
