@@ -33,7 +33,6 @@ async function carregarProdutos() {
             div.querySelector('button').addEventListener('click', () => {
                 Carrinho.addProduto(p);
                 atualizarContadorCarrinho(); // atualiza o contador
-                alert(`${p.nome} adicionado ao carrinho!`);
             });
 
             container.appendChild(div);
